@@ -662,7 +662,7 @@
 
     <script>
         // MASUKKAN GOOGLE APPS SCRIPT WEB APP URL ANDA DI SINI
-        const GAS_WEB_APP_URL = "SILA_TAMPAL_URL_WEB_APP_ANDA_DI_SINI"; // <-- GANTIKAN URL ANDA DI SINI!
+        const GAS_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxRgPEpdWXLLCd--IXOj2-cfqfceMJK3hAjLiX7v_tL8EO1s0tG8vSDWom6Z8tA_WB6/exec"; // <-- GANTIKAN URL ANDA DI SINI!
 
         // Dictionary Terjemahan
         const translations = {
@@ -832,7 +832,7 @@
             const pilgrimId = urlParams.get('id');
 
             // Jika tiada ID dalam URL, biarkan default UI (jangan redirect)
-            if (!pilgrimId || GAS_WEB_APP_URL === "SILA_TAMPAL_URL_WEB_APP_ANDA_DI_SINI") {
+            if (!pilgrimId || GAS_WEB_APP_URL === "https://script.google.com/macros/s/AKfycbxRgPEpdWXLLCd--IXOj2-cfqfceMJK3hAjLiX7v_tL8EO1s0tG8vSDWom6Z8tA_WB6/exec") {
                 setLanguage(currentLanguage); 
                 return;
             }
