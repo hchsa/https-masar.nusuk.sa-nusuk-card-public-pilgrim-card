@@ -5,13 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title data-i18n="pageTitle">تطبيق حجاج مسار</title>
     
-    <!-- Tailwind CSS (CDN) -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Lucide Icons (CDN) -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
-    <!-- Google Fonts: IBM Plex Sans Arabic -->
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:100;400;500;600;700&family=IBM+Plex+Sans+Arabic:100;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -69,74 +66,62 @@
     </style>
 </head>
 
-<!-- Body kini memenuhkan 100% skrin di semua peranti -->
 <body class="min-h-screen w-full bg-[#FAFAFA] m-0 p-0 overflow-hidden text-gray-800">
 
-    <!-- Container Utama: 100% full screen pada Mobile, Tablet, Laptop, dan Desktop -->
     <div id="app-container" class="w-full h-[100dvh] relative overflow-hidden transition-all duration-300 flex flex-col text-start rtl:text-right">
         
-        <!-- Latar Belakang Aplikasi (Statik) -->
+        <div id="loading-overlay" class="absolute inset-0 z-[999] bg-[#FAFAFA] transition-opacity duration-300" style="background-image: url('https://drive.google.com/thumbnail?id=1an5yX3hvxm3IRbrelqu7_2NiN-Uwajgq&sz=w2000
+'); background-size: cover; background-position: top right; background-repeat: no-repeat;">
+        </div>
+
         <div class="absolute inset-[0px] z-0 pointer-events-none overflow-hidden">
             <div class="absolute inset-[0px] static-bg rtl:scale-x-100 ltr:scale-x-[-1] opacity-60"></div>
             <div class="absolute inset-[0px] bg-gray-100 opacity-10 lg:opacity-0"></div>
         </div>
 
-        <!-- Ruang Kandungan Boleh Skrol -->
         <div class="flex-1 w-full overflow-y-auto hide-scroll relative z-10 flex flex-col pb-[120px] lg:pb-[80px]">
             
-            <!-- Header (Lebar Maksimum 1920px dengan padding yang sekata dari 375px) -->
             <header class="pt-[16px] px-[16px] sm:px-[24px] lg:px-[32px] 2xl:px-[64px] pb-[0] flex items-center justify-between relative z-50 w-full max-w-[1920px] mx-auto lg:pt-[16px] mb-[0]">
-                <!-- Logo -->
                 <div class="bg-transparent rounded-[12px]">
                     <img src="https://drive.google.com/thumbnail?id=1qPW0CD4g2l4FKDaRUfpimewQ7H9tez3A&sz=w2000" alt="تصريح" class="w-[120px] sm:w-[135.95px] h-auto object-contain" />
                 </div>
                 
-                <!-- Language Toggle -->
                 <div class="relative text-right mt-[8px]" id="lang-container" dir="ltr">
                     <button id="lang-toggle-btn" onclick="toggleDropdown()" class="flex items-center justify-center gap-[6px] border-[0px] px-[8px] py-[4px] h-[32px] bg-transparent cursor-pointer">
                         <i data-lucide="globe" class="w-[20px] sm:w-[22px] h-[20px] sm:h-[22px] text-black pointer-events-none shrink-0"></i>
-                        <span id="current-lang" class="text-[15px] sm:text-[16px] font-semibold text-gray-600 pointer-events-none">AR</span>
+                        <span id="current-lang" class="text-[15px] sm:text-[16px] font-normal text-gray-600 pointer-events-none">AR</span>
                         <i id="lang-chevron" data-lucide="chevron-down" class="w-[18px] h-[18px] text-gray-800 transition-transform duration-300 pointer-events-none shrink-0"></i>
                     </button>
                     
                     <div id="lang-dropdown" class="hidden absolute right-[0px] top-full mt-[8px] w-[112px] bg-white rounded-[12px] shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50 py-[6px]">
-                        <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-semibold transition-colors" data-i18n="langAr">العربية</button>
-                        <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-semibold transition-colors hover:bg-gray-100" data-i18n="langEn">English</button>
+                        <button onclick="setLanguage('AR')" id="lang-ar-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-white bg-[#8b8b8b] border-[0px] cursor-pointer font-normal transition-colors" data-i18n="langAr">العربية</button>
+                        <button onclick="setLanguage('EN')" id="lang-en-btn" class="block w-full text-start rtl:text-right ltr:text-left px-[16px] py-[8px] text-[14px] text-gray-500 bg-white border-[0px] cursor-pointer font-normal transition-colors hover:bg-gray-100" data-i18n="langEn">English</button>
                     </div>
                 </div>
             </header>
 
-            <!-- Main Tabs (Sembunyi di Desktop - lg:hidden) -->
             <div class="px-[16px] sm:px-[24px] mb-[24px] mt-[16px] relative z-10 lg:hidden">
                 <div class="flex w-full bg-[#ebebeb] rounded-[18px] overflow-hidden h-[50px] sm:h-[55px]">
-                    <button id="tab-main-pilgrim" onclick="switchMainTab('pilgrim')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-bold text-[#fff] bg-[#101522] border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabPilgrim">
+                    <button id="tab-main-pilgrim" onclick="switchMainTab('pilgrim')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-normal text-[#fff] bg-[#101522] border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabPilgrim">
                         بيانات الحاج
                     </button>
-                    <button id="tab-main-services" onclick="switchMainTab('services')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-bold text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabServices">
+                    <button id="tab-main-services" onclick="switchMainTab('services')" class="flex-1 flex items-center justify-center h-full text-[17px] sm:text-[19.2px] font-normal text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none" data-i18n="mainTabServices">
                         الخدمات        
                     </button>
                 </div>
             </div>
 
-            <!-- WRAPPER DESKTOP & WUXGA -->
             <div class="flex flex-col lg:flex-row w-full max-w-[1920px] mx-auto lg:pt-[16px] lg:px-[32px] 2xl:px-[64px] lg:gap-[24px] flex-1">
                 
-                <!-- ================= SECTION 1: PILGRIM DATA ================= -->
-                <!-- Di Desktop, ia mengambil ruang utama (~66.5%) -->
                 <div id="section-pilgrim" class="px-[16px] sm:px-[24px] lg:px-[0] pb-[24px] w-full lg:w-[66.5%]">
                     
-                    <!-- Card Profil Jemaah -->
                     <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] shadow-sm mb-[16px] border border-gray-100 relative z-10 overflow-hidden">
                         
-                        <!-- Gambar & Info -->
                         <div class="flex flex-row items-start gap-[12px] sm:gap-[16px] mb-[16px]">
-                            
-                            <!-- Gambar Profil -->
                             <div class="w-[80px] h-[96px] sm:w-[100px] sm:h-[115px] lg:w-[110px] lg:h-[130px] shrink-0 bg-gray-100 rounded-[12px] overflow-hidden border-[3px] border-[#4285F4] shadow-sm">
                                 <img id="profile-img" src="https://drive.google.com/thumbnail?id=1FHj5_AItrHZE74785Bm0gy_u5oaT0LPU&sz=w2000" alt="Pilgrim" class="w-full h-full object-cover" />
                             </div>
 
-                            <!-- Info Ringkas -->
                             <div class="flex-1 min-w-0 pt-[4px] lg:pt-[8px]">
                                 <h2 class="text-[16px] sm:text-[clamp(14px,2.5vw,26px)] max-w-[767.98px] font-normal text-gray-700 mb-[12px] sm:mb-[16px] text-start truncate" data-i18n="pilgrimName">HASBULLAH BIN HASSAN</h2>
                                 <div class="inline-block align-middle bg-[#eff8ff] text-[#2e90fa] px-[16px] sm:px-[20px] py-[6px] rounded-full text-[13px] sm:text-[14px] font-semibold border border-[#b2ddff]" data-i18n="pilgrimType">
@@ -147,67 +132,58 @@
 
                         <hr class="border border-gray-100 mb-[20px] sm:mb-[24px] -mx-[4px]">
 
-                        <!-- Butiran (Disesuaikan Gap Untuk 375px Skrin Kecil) -->
                         <div class="grid grid-cols-2 gap-y-[16px] sm:gap-y-[20px] gap-x-[12px] sm:gap-x-[24px] w-full text-[13px] sm:text-[14px]">
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblPilgrimNo">رقم الحاج</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblPilgrimNo">رقم الحاج</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words">447050103011886</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblGender">الجنس</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblGender">الجنس</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valGender">ذكر</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblBirth">تاريخ الميلاد</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblBirth">تاريخ الميلاد</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valBirth">21/03/1961</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblNationality">الجنسية</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblNationality">الجنسية</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valNationality">ماليزيا</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblPassport">رقم الجواز</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblPassport">رقم الجواز</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words" data-i18n="valPassport">A72053133</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblPackage">نوع الباقة</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblPackage">نوع الباقة</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valPackage">حجاج خارج مجموعات</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblVisa">رقم التأشيرة</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblVisa">رقم التأشيرة</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words">6163010506</p>
                             </div>
                             <div>
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblCountry">بلد القدوم</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblCountry">بلد القدوم</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] mx-[0px]" data-i18n="valCountry">مملكة ماليزيا الاتحادية</p>
                             </div>
                             <div class="col-span-2 sm:col-span-1">
-                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-semibold" data-i18n="lblBorder">رقم الحدود</p>
+                                <p class="text-[#484d51] text-[13px] sm:text-[14px] mb-[4px] font-normal" data-i18n="lblBorder">رقم الحدود</p>
                                 <p class="text-[#23282d] text-[14px] lg:text-[15px] tracking-wide mx-[0px] break-words">6226852520</p>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Sub Tabs -->
                     <div class="relative w-full overflow-hidden mb-[16px] mt-[4px]">
-
                         <button type="button" id="tab-scroll-prev" onclick="scrollTabs(-1)" class="hidden absolute top-0 bottom-[12px] rtl:right-0 ltr:left-0 w-[48px] bg-gradient-to-r rtl:from-transparent rtl:to-white ltr:from-white ltr:to-transparent flex items-center rtl:justify-end ltr:justify-start z-10 border-0 cursor-pointer text-gray-500 hover:text-gray-800 transition-colors">
                             <i data-lucide="chevron-right" class="w-[20px] h-[20px] rtl:block ltr:hidden mt-[14px]"></i>
                             <i data-lucide="chevron-left" class="w-[20px] h-[20px] rtl:hidden ltr:block mt-[14px]"></i>
                         </button>
 
                         <div id="tab-container" class="flex gap-[24px] sm:gap-[32px] w-full overflow-x-auto whitespace-nowrap scrollbar-none scroll-smooth px-[4px]">
-
-                            <button type="button" role="tab" id="tab-sub-provider" onclick="switchSubTab('provider')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-semibold text-[#369A36] shrink-0 outline-none">
-                                <span class="inline-block tab-indicator border-b-[2px] border-[#008000] pb-[4px] transition-colors" data-i18n="subTabProvider">
-                                بيانات مقدم الخدمة
-                                </span>
+                            <button type="button" role="tab" id="tab-sub-provider" onclick="switchSubTab('provider')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-normal text-[#369A36] shrink-0 outline-none">
+                                <span class="inline-block tab-indicator border-b-[2px] border-[#008000] pb-[4px] transition-colors" data-i18n="subTabProvider">بيانات مقدم الخدمة</span>
                             </button>
-
-                            <button type="button" role="tab" id="tab-sub-housing" onclick="switchSubTab('housing')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-semibold text-gray-600 shrink-0 outline-none">
-                                <span class="inline-block tab-indicator border-b-[2px] border-transparent pb-[4px] transition-colors" data-i18n="subTabHousing">
-                                بيانات السكن
-                                </span>
+                            <button type="button" role="tab" id="tab-sub-housing" onclick="switchSubTab('housing')" class="tab-btn min-w-fit text-[15px] sm:text-[16px] font-normal text-gray-600 shrink-0 outline-none">
+                                <span class="inline-block tab-indicator border-b-[2px] border-transparent pb-[4px] transition-colors" data-i18n="subTabHousing">بيانات السكن</span>
                             </button>
                         </div>
 
@@ -215,57 +191,54 @@
                             <i data-lucide="chevron-left" class="w-[20px] h-[20px] rtl:block ltr:hidden mt-[14px]"></i>
                             <i data-lucide="chevron-right" class="w-[20px] h-[20px] rtl:hidden ltr:block mt-[14px]"></i>
                         </button>
-
                     </div>
 
-                    <!-- Content: Provider -->
                     <div id="content-provider" class="block">
                         <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 mb-[24px]">
-                            <h3 class="text-[18px] sm:text-[20px] font-semibold text-gray-700 mt-[0px] mb-[16px]" data-i18n="hdrProvider">بيانات مقدم الخدمة</h3>
+                            <h3 class="text-[18px] sm:text-[20px] font-normal text-gray-700 mt-[0px] mb-[16px]" data-i18n="hdrProvider">بيانات مقدم الخدمة</h3>
                             <hr class="border-t border-gray-200 mb-[20px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
                             
                             <div class="grid grid-cols-2 gap-y-[16px] gap-x-[12px] sm:gap-x-[20px] w-full mb-[24px]">
                                 <div class="flex flex-col gap-[6px]">
-                                    <p class="text-gray-600 text-[13px] font-semibold m-[0px]" data-i18n="lblProviderCo">شركة تقديم الخدمة</p>
-                                    <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px]" data-i18n="valProviderCo">شركة فندق هوليدي إن بكة شخص واحد</p>
+                                    <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblProviderCo">شركة تقديم الخدمة</p>
+                                    <p class="font-normal text-[13px] text-gray-800 leading-snug m-[0px]" data-i18n="valProviderCo">شركة فندق هوليدي إن بكة شخص واحد</p>
                                 </div>
                                 <div class="flex flex-col gap-[6px]">
-                                    <p class="text-gray-600 text-[13px] font-semibold m-[0px]" data-i18n="lblHospMakkah">مركز الضيافة في مكة</p>
-                                    <p class="font-semibold text-[13px] text-gray-600 leading-snug m-[0px]" data-i18n="valHospMakkah">مركز ضيافة نزلي (67)</p>
+                                    <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblHospMakkah">مركز الضيافة في مكة</p>
+                                    <p class="font-normal text-[13px] text-gray-800 leading-snug m-[0px]" data-i18n="valHospMakkah">مركز ضيافة نزلي (67)</p>
                                 </div>
                                 <div class="flex flex-col gap-[0px]">
-                                    <p class="text-gray-600 text-[13px] font-semibold m-[0px]" data-i18n="lblHospMadinah">مركز الضيافة في المدينة</p>
+                                    <p class="text-gray-600 text-[13px] font-normal m-[0px]" data-i18n="lblHospMadinah">مركز الضيافة في المدينة</p>
                                     <p class="hidden" data-i18n="valHospMadinah">-</p>
                                 </div>
                                 <div class="flex flex-col gap-[0px] mb-[0px]">
-                                    <p class="text-transparent text-[13px] font-semibold m-[0px]" data-i18n="lblSpl">رقم SPL</p>
-                                    <p class="font-semibold text-[13px] text-transparent tracking-wide m-[0px]" data-i18n="valSpl">32</p>
+                                    <p class="text-transparent text-[13px] font-normal m-[0px]" data-i18n="lblSpl">رقم SPL</p>
+                                    <p class="font-normal text-[13px] text-transparent tracking-wide m-[0px]" data-i18n="valSpl">32</p>
                                 </div>
                             </div>
 
                             <div class="w-full mb-[12px]">
-                                <p class="text-gray-600 text-[15px] sm:text-[16px] font-semibold m-[0px]" data-i18n="lblProviderLoc">مكان شركة تقديم الخدمة</p>
+                                <p class="text-gray-800 text-[15px] sm:text-[16px] font-normal m-[0px]" data-i18n="lblProviderLoc">مكان شركة تقديم الخدمة</p>
                             </div>
 
-                            <div class="relative w-full h-[200px] sm:h-[252px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                            <div class="relative w-full h-[300px] mx-auto overflow-hidden shadow-sm border border-gray-200 rounded-[6px] map-container">
                                 <iframe src="https://maps.google.com/maps?q=21.4162985,39.8606299&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
-                                    <a href="https://www.google.com/maps/place/21%C2%B024'58.7%22N+39%C2%B051'38.3%22E/@21.4162985,39.8606299,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+<div class="absolute bottom-[12px] left-1/2 -translate-x-1/2 sm:bottom-[16px] sm:left-[16px] sm:translate-x-0 flex pointer-events-none z-10">
+                                    <a href="https://www.google.com/maps/place/21%C2%B024'58.7%22N+39%C2%B051'38.3%22E/@21.4162985,39.8606299,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline whitespace-nowrap min-w-max">
                                         <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] h-[16px] sm:w-[18px] sm:h-[18px] object-contain"/>
-                                        <span class="text-[13px] sm:text-[14px] text-gray-700 font-normal" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                        <span class="text-[13px] sm:text-[14px] text-gray-700 font-normal whitespace-nowrap" data-i18n="btnDirection">الإتجاه للموقع</span>
                                     </a>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Content: Housing -->
                     <div id="content-housing" class="hidden">
                         <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 mb-[20px]">
-                            <h3 class="text-[18px] sm:text-[20px] font-semibold text-gray-700 mt-[0px] mb-[12px]" data-i18n="hdrHousing">تفاصيل سكن الحاج</h3>
+                            <h3 class="text-[18px] sm:text-[20px] font-normal text-gray-700 mt-[0px] mb-[12px]" data-i18n="hdrHousing">تفاصيل سكن الحاج</h3>
                             <hr class="border-t border-gray-200 mb-[16px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">
                     
-                            <div class="flex w-full overflow-x-auto whitespace-nowrap hide-scroll mb-[20px] pb-[4px] gap-[24px] sm:gap-[32px] text-start leading-[24px] tracking-[0px] relative item-center ltr:pl-[0px] sm:ltr:pl-[32px]">
+                            <div class="flex w-full overflow-x-auto whitespace-nowrap hide-scroll mb-[20px] pb-[4px] gap-[24px] sm:gap-[32px] text-start leading-[24px] tracking-[0px] relative items-center ltr:pl-[0px] sm:ltr:pl-[32px]">
                                 <button id="tab-loc-makkah" onclick="switchLocTab('makkah')" class="p-0 text-[15px] sm:text-[20px] font-normal whitespace-nowrap text-[#369A36] bg-transparent cursor-pointer shrink-0">
                                     <span class="inline-block border-b-[2px] border-[#1a855b] pb-[8px] transition-colors" data-i18n="locMakkah">مكة المكرمة</span>
                                 </button>
@@ -280,7 +253,6 @@
                                 </button>
                             </div>
 
-                            <!-- Panel Makkah -->
                             <div id="loc-makkah" class="block">
                                 <div class="flex items-start gap-[12px] mb-[16px]">
                                     <img src="https://drive.google.com/thumbnail?id=1Z8KbAT9CugWWGOJzy13fW6UfQZ6rFOAZ&sz=w100" alt="hotel" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] shrink-0 object-cover rounded-[6px] -translate-y-[12px]">
@@ -288,18 +260,17 @@
                                         10010014 - فندق قصر الجنادرية لصاحبه عمر سعيد بافيل - السليمانية الشرقي شارع
                                     </p>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] mx-auto overflow-hidden shadow-sm border border-gray-200 rounded-[6px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=21.4312536,39.8300529&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
-                                        <a href="https://www.google.com/maps/place/21%C2%B025'52.5%22N+39%C2%B049'48.2%22E/@21.4312536,39.8300529,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+<div class="absolute bottom-[12px] left-1/2 -translate-x-1/2 sm:bottom-[16px] sm:left-[16px] sm:translate-x-0 flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/21%C2%B025'52.5%22N+39%C2%B049'48.2%22E/@21.4312536,39.8300529,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline whitespace-nowrap min-w-max">
                                             <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                                        
-                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Panel Madinah -->
                             <div id="loc-madinah" class="hidden">
                                 <div class="flex items-start gap-[12px] mb-[16px]">
                                     <img src="https://drive.google.com/thumbnail?id=1Z8KbAT9CugWWGOJzy13fW6UfQZ6rFOAZ&sz=w100" alt="hotel" class="w-[40px] h-[40px] sm:w-[50px] sm:h-[50px] shrink-0 object-cover rounded-[6px] -translate-y-[12px]" />
@@ -307,19 +278,18 @@
                                         10007095 - فندق اعمار رويال للخدمات الفندقية - بضاعة شارع الملك فيصل
                                     </p>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] mx-auto overflow-hidden shadow-sm border border-gray-200 rounded-[6px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=24.4734394,39.6133089&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
-                                        <a href="https://www.google.com/maps/place/24%C2%B028'24.4%22N+39%C2%B036'47.9%22E/@24.4734394,39.6133089,1156m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+<div class="absolute bottom-[12px] left-1/2 -translate-x-1/2 sm:bottom-[16px] sm:left-[16px] sm:translate-x-0 flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/24%C2%B028'24.4%22N+39%C2%B036'47.9%22E/@24.4734394,39.6133089,1156m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline whitespace-nowrap min-w-max">
                                             <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
-                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Panel Mina -->
-                            <div id="loc-mina" class="hidden">
+                           <div id="loc-mina" class="hidden">
                                 <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[20px]">
                                     <div class="flex flex-col gap-[4px]">
                                         <div class="flex items-center gap-[8px] sm:gap-[12px]">
@@ -343,18 +313,17 @@
                                         <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[16px]">10</span>
                                     </div>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] mx-auto overflow-hidden shadow-sm border border-gray-200 rounded-[6px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=21.4217833,39.893677&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
-                                        <a href="https://www.google.com/maps/place/21%C2%B025'18.4%22N+39%C2%B053'37.2%22E/@21.4217833,39.893677,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+<div class="absolute bottom-[12px] left-1/2 -translate-x-1/2 sm:bottom-[16px] sm:left-[16px] sm:translate-x-0 flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/21%C2%B025'18.4%22N+39%C2%B053'37.2%22E/@21.4217833,39.893677,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline whitespace-nowrap min-w-max">
                                             <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
-                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-600" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-700 whitespace-nowrap" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
                             </div>
 
-                            <!-- Panel Arafat -->
                             <div id="loc-arafat" class="hidden">
                                 <div class="grid grid-cols-2 gap-x-[12px] sm:gap-[16px] w-full mb-[20px]">
                                     <div class="flex flex-col gap-[4px]">
@@ -372,12 +341,12 @@
                                         <span class="text-[14px] sm:text-[16px] font-normal text-gray-700 tracking-wide rtl:mr-[48px] sm:rtl:mr-[62px] ltr:ml-[48px] sm:ltr:ml-[62px] block -translate-y-[12px]">612</span>
                                     </div>
                                 </div>
-                                <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[300px] mx-auto overflow-hidden shadow-inner border border-gray-200 rounded-[0px] map-container">
+                                <div class="relative w-full h-[300px] mx-auto overflow-hidden shadow-sm border border-gray-200 rounded-[6px] map-container">
                                     <iframe src="https://maps.google.com/maps?q=21.3767959,39.9846318&t=k&z=16&output=embed" allowfullscreen="" loading="lazy"></iframe>
-                                    <div class="absolute bottom-[12px] sm:bottom-[16px] left-[12px] sm:left-[16px] flex pointer-events-none z-10">
-                                        <a href="https://www.google.com/maps/place/21%C2%B022'36.5%22N+39%C2%B059'04.7%22E/@21.3767959,39.9846318,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline">
+<div class="absolute bottom-[12px] left-1/2 -translate-x-1/2 sm:bottom-[16px] sm:left-[16px] sm:translate-x-0 flex pointer-events-none z-10">
+                                        <a href="https://www.google.com/maps/place/21%C2%B022'36.5%22N+39%C2%B059'04.7%22E/@21.3767959,39.9846318,1183m" target="_blank" class="pointer-events-auto flex items-center justify-center gap-[6px] sm:gap-[8px] bg-white px-[12px] sm:px-[16px] py-[6px] sm:py-[8px] rounded-[8px] shadow-md hover:bg-gray-50 hover:-translate-y-1 border border-gray-100 transition-all duration-300 no-underline whitespace-nowrap min-w-max">
                                             <img src="https://drive.google.com/thumbnail?id=1MwwvggrcHDxq0_HWMI_b6J2QZeqtK4Mr&sz=w2000" alt="direction" class="w-[16px] sm:w-[20px] h-[16px] sm:h-[20px] object-contain"/>                             
-                                            <span class="text-[13px] sm:text-[14px] font-medium text-gray-600" data-i18n="btnDirection">الإتجاه للموقع</span>
+                                            <span class="text-[13px] sm:text-[14px] font-normal text-gray-600 whitespace-nowrap" data-i18n="btnDirection">الإتجاه للموقع</span>
                                         </a>
                                     </div>
                                 </div>
@@ -385,13 +354,11 @@
                         </div>
                     </div>
 
-                    <!-- Telefon Penting -->
                     <div class="bg-white/95 backdrop-blur rounded-[20px] p-[16px] sm:p-[20px] lg:p-[30px] lg:pt-[16px] shadow-sm border border-gray-100 lg:mb-[80px]">
                         <h3 class="text-[18px] lg:text-[22px] font-normal p-[4px] sm:p-[8px] text-gray-800 mb-[16px]" data-i18n="importantPhones">أرقام مهمة</h3>
                         <hr class="border-t border-gray-200 mb-[16px] -mx-[16px] sm:-mx-[20px] lg:-mx-[30px]">  
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-y-[16px]">
-                            <!-- ITEM 1 -->
                             <div class="flex flex-col gap-[0px]">
                                 <p class="text-[15px] sm:text-[16px] font-normal text-gray-700 mb-[8px] sm:mb-[12px]" data-i18n="hajjMinistryPhone">التواصل مع وزارة الحج و العمره</p>
                                 <a href="tel:1966" class="flex items-center gap-[0px] no-underline">
@@ -401,7 +368,6 @@
                                 </a>
                             </div>
 
-                            <!-- ITEM 2 -->
                             <div class="flex flex-col gap-[0px]">
                                 <p class="text-[15px] sm:text-[16px] font-normal text-gray-700 mb-[8px] sm:mb-[12px]" data-i18n="providerPhone">التواصل مع شركة تقديم الخدمة</p>
                                 <a href="tel:+9668001111415" class="flex items-center gap-[0px] no-underline">
@@ -412,14 +378,10 @@
                             </div>
                         </div>
 
-                    </div> <!-- END PILGRIM DATA -->
-                </div>
+                    </div> </div>
 
-                <!-- ================= SECTION 2: SERVICES ================= -->
-                <!-- Di Desktop, ia mengambil baki ruang -->
                 <div id="section-services" class="max-lg:hidden px-[16px] sm:px-[24px] lg:px-[0] pb-[24px] w-full lg:flex-1">
                     
-                    <!-- Nusk Card Banner -->
                     <div class="bg-[#DFF6E7] backdrop-blur rounded-[20px] p-[20px] sm:p-[30px] mb-[24px] shadow-lg relative overflow-hidden flex flex-col justify-center min-h-[170px]">
                         <div class="absolute top-[0px] bottom-[0px] rtl:left-[0px] ltr:right-[0px] p-[16px] opacity-50 pointer-events-none z-0">
                             <img src="https://masar.nusuk.sa/assets/images/nusk-card-bg.png" alt="Discount" class="h-full w-auto object-contain rtl:-scale-x-100" onerror="this.style.display='none'" />
@@ -437,19 +399,16 @@
                         </div>
                     </div>
 
-                    <!-- Report Lost Pilgrim Card -->
                     <div class="bg-white/95 backdrop-blur rounded-[20px] p-[20px] sm:p-[30px] mb-[24px] shadow-lg border border-gray-100 relative overflow-hidden flex flex-col justify-center min-h-[170px]">
                         <div class="relative z-1 w-full">
                             <h3 class="text-[20px] sm:text-[26px] leading-[30px] sm:leading-[36px] text-start font-normal text-[#1a1a1a] mb-[10px] mx-[0px] mt-[0px] max-w-[100%]" data-i18n="reportLostTitle" >الإبلاغ عن حاج ضائع</h3>
                             <p class="text-[14px] sm:text-[16px] leading-[20px] text-start font-base text-[#555] mb-[24px] mx-[0px] mt-[0px] max-w-[100%]" data-i18n="reportLostDesc">ساعدنا في الوصول إلى الحاج من خلال تقديم بلاغ</p>
                             <div class="text-start">
-                               <!-- State A: Default Submit Button -->
                                <a id="btn-open-report" href="#" onclick="openReportModal(event)" class="inline-flex items-center justify-center gap-[8px] bg-[#198754] text-[#fff] px-[20px] sm:px-[24px] py-[10px] sm:py-[12px] rounded-[8px] text-[15px] sm:text-[16px] font-normal shadow-sm no-underline flex-row transition-all duration-300 hover:-translate-y-1 hover:shadow-[5px_5px_10px_-5px_rgba(25,135,84,0.5),-5px_5px_10px_-5px_rgba(25,135,84,0.5)] cursor-pointer">
                                  <span data-i18n="btnSubmitReport">تقديم بلاغ</span>
                                  <i data-lucide="arrow-left" class="inline-flex text-center gap-[8px] font-normal text-[16px] w-[18px] h-[18px] object-contain ltr:rotate-180"></i>
                                </a>
                                
-                               <!-- State B: Withdraw Button (Hidden Initially) -->
                                <a id="btn-withdraw-report" href="#" onclick="withdrawReport(event)" class="hidden items-center justify-center gap-[8px] bg-white border border-[#198754] text-[#198754] px-[20px] sm:px-[24px] py-[10px] sm:py-[12px] rounded-[8px] text-[15px] sm:text-[16px] font-normal shadow-sm no-underline flex-row transition-all duration-300 hover:bg-[#E7F5EE] hover:-translate-y-1 hover:shadow-[5px_5px_10px_-5px_rgba(25,135,84,0.3),-5px_5px_10px_-5px_rgba(25,135,84,0.3)] cursor-pointer">
                                  <span data-i18n="btnWithdrawReport">سحب البلاغ</span>
                                  <i data-lucide="rotate-ccw" stroke-width="2" class="w-[16px] h-[16px] rotate-45"></i>
@@ -458,7 +417,6 @@
                         </div>
                     </div>
 
-                    <!-- Health Certificate Accordion -->
                     <div class="mb-[24px]">
                         <button onclick="toggleHealthCert()" class="w-full flex flex-col bg-[#ECF8F5] backdrop-blur border border-[#afe0d4] rounded-[12px] p-[12px] shadow-lg cursor-pointer transition-all duration-300">
                             <div class="flex gap-[10px] text-start mx-[20px]">
@@ -528,14 +486,12 @@
                         </div>
                     </div>
 
-                    <!-- Interactive Maps Section -->
                     <div class="mb-[18px]">
                         <h3 class="text-[20px] sm:text-[24px] font-normal text-gray-800 mx-[0px] mb-[18px]" data-i18n="interactiveMaps" dir="rtl">الخرائط التفاعلية</h3>
                         
                         <div class="flex flex-col gap-[20px] sm:gap-[24px]">
                             
-                            <!-- MAP CARD 1: Masjid Haram -->
-                            <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[250px] rounded-[8px] overflow-hidden shadow-sm group border border-gray-100">
+                            <div class="relative w-full h-[250px] sm:h-[300px] rounded-[20px] overflow-hidden shadow-sm group border border-gray-100">
                                 <img src="https://drive.google.com/thumbnail?id=1ZP7FZKqWRnQiFRptbZ0pxQB4l6jAKVBd&sz=w2000" alt="المسجد الحرام" class="w-full h-full object-cover transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/90 via-[#101522]/20 to-transparent pointer-events-none"></div>
                                 <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:right-[24px] sm:rtl:right-[48px] ltr:left-[24px] sm:ltr:left-[48px] flex items-center h-[44px] pointer-events-none">
@@ -548,8 +504,7 @@
                                 </div>
                             </div>
 
-                            <!-- MAP CARD 2: Masjid Nabawi -->
-                            <div class="relative w-full h-[200px] sm:h-[250px] lg:h-[250px] rounded-[8px] overflow-hidden shadow-sm group border border-gray-100">
+                            <div class="relative w-full h-[250px] sm:h-[300px] rounded-[20px] overflow-hidden shadow-sm group border border-gray-100">
                                 <img src="https://drive.google.com/thumbnail?id=1OUKM5eybkWQxgnTc1xtw21hd7dPcWRke&sz=w2000" alt="المسجد النبوي" class="w-full h-full object-cover transition-transform duration-500">
                                 <div class="absolute inset-0 bg-gradient-to-t from-[#101522]/90 via-[#101522]/20 to-transparent pointer-events-none"></div>
                                 <div class="absolute bottom-[24px] sm:bottom-[32px] rtl:right-[24px] sm:rtl:right-[48px] ltr:left-[24px] sm:ltr:left-[48px] flex items-center h-[44px] pointer-events-none">
@@ -565,19 +520,12 @@
                         </div>
                     </div>
 
-                </div> <!-- END SERVICES -->
-            </div> <!-- END WRAPPER DESKTOP -->
-            
-        </div> <!-- END SCROLLABLE AREA -->
-
-        <!-- Footer -->
-        <div class="absolute bottom-0 inset-x-0 z-[50] w-full bg-white/95 backdrop-blur border-t border-gray-200 shadow-[0_-6px_20px_rgba(0,0,0,0.08)]">
+                </div> </div> </div> <div class="absolute bottom-0 inset-x-0 z-[50] w-full bg-white/95 backdrop-blur border-t border-gray-200 shadow-[0_-6px_20px_rgba(0,0,0,0.08)]">
             <div class="max-w-[1920px] mx-auto text-center text-[12px] sm:text-[14px] text-gray-500 py-[12px] px-[16px] sm:px-[20px] lg:px-[32px]" data-i18n="footerText">
                 تحت إشراف لجنة الحج العليا
             </div>
         </div>
 
-        <!-- MODAL: REPORT LOST PILGRIM -->
         <div id="report-modal" class="hidden absolute inset-0 z-[100] flex items-center justify-center bg-gray-600/20 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
             <div class="bg-white w-full sm:max-w-[452px] min-h-[192px] rounded-[24px] pt-[24px] pr-[16px] sm:pr-[20px] pb-[22px] pl-[16px] sm:pl-[20px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col text-start border border-gray-100 max-h-[90vh] overflow-y-auto hide-scroll">
                 
@@ -614,7 +562,6 @@
             </div>
         </div>
 
-        <!-- MODAL: SUCCESS (Berjaya) -->
         <div id="success-modal" class="hidden absolute inset-0 z-[110] flex items-center justify-center bg-gray-600/20 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
             <div class="bg-white w-full sm:max-w-[452px] min-h-[250px] sm:h-[326px] rounded-[24px] p-[24px] sm:p-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col text-center border border-gray-100">
                 <button type="button" onclick="closeSuccessModal()" class="absolute top-[20px] sm:top-[24px] left-[20px] sm:left-[24px] text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0">
@@ -628,7 +575,6 @@
             </div>
         </div>
 
-        <!-- MODAL: WITHDRAW SUCCESS (Berjaya Batal) -->
         <div id="withdraw-success-modal" class="hidden absolute inset-0 z-[110] flex items-center justify-center bg-gray-600/20 backdrop-blur-sm px-[16px] sm:px-[20px] transition-opacity duration-300">
             <div class="bg-white w-full sm:max-w-[452px] min-h-[200px] sm:h-[236px] rounded-[24px] p-[24px] sm:p-[32px] shadow-[0_10px_40px_rgba(0,0,0,0.1)] relative flex flex-col justify-center text-center border border-gray-100">                
                 <button type="button" onclick="closeWithdrawSuccessModal()" class="absolute top-[20px] sm:top-[24px] left-[20px] sm:left-[24px] text-gray-800 hover:text-gray-500 transition-colors focus:outline-none shrink-0">
@@ -769,7 +715,7 @@
                 'locMina': 'Mina',
                 'locArafat': 'Arafat',
                 'descMakkahHotel': '10010014 - فندق قصر الجنادرية لصاحبه عمر سعيد بافيل - السليمانية الشرقي شارع',
-                'descMadinahHotel': 'فندق اعمار رويال للخدمات الفندقية, بضاعة شارع الملك فيصل',
+                'descMadinahHotel': '10007095 - فندق اعمار رويال للخدمات الفندقية - بضاعة شارع الملك فيصل',
                 'lblCampNo': 'Camp Number',
                 'lblStreetNo': 'Street Number',
                 'lblGateNo': 'Gate Number',
@@ -829,6 +775,11 @@
             // Jika tiada ID dalam URL, biarkan default UI (jangan redirect)
             if (!pilgrimId || !GAS_WEB_APP_URL || GAS_WEB_APP_URL.includes("SILA_TAMPAL")) {
                 setLanguage(currentLanguage); 
+                const loader = document.getElementById('loading-overlay');
+                if(loader) {
+                    loader.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => loader.remove(), 300);
+                }
                 return;
             }
 
@@ -862,6 +813,13 @@
                                          .replace('6163010506', numbers.visaNo)
                                          .replace('6226852520', numbers.borderNo);
                         document.body.innerHTML = content;
+                        
+                        // Sembunyikan skrin loading selepas DOM siap dikemaskini
+                        const loader = document.getElementById('loading-overlay');
+                        if(loader) {
+                            loader.classList.add('opacity-0', 'pointer-events-none');
+                            setTimeout(() => loader.remove(), 300);
+                        }
                     }, 100);
 
                 } else {
@@ -981,8 +939,8 @@
             const secPilgrim = document.getElementById('section-pilgrim');
             const secServices = document.getElementById('section-services');
 
-            const activeClass = "flex-1 flex items-center justify-center h-[50px] sm:h-[55px] text-[17px] sm:text-[19.2px] font-bold bg-[#071124] text-white border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none";
-            const inactiveClass = "flex-1 flex items-center justify-center h-[50px] sm:h-[55px] text-[17px] sm:text-[19.2px] font-bold text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none";
+            const activeClass = "flex-1 flex items-center justify-center h-[50px] sm:h-[55px] text-[17px] sm:text-[19.2px] font-normal bg-[#071124] text-white border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none";
+            const inactiveClass = "flex-1 flex items-center justify-center h-[50px] sm:h-[55px] text-[17px] sm:text-[19.2px] font-normal text-gray-700 bg-transparent border-[0px] cursor-pointer transition-colors ltr:rounded-[18px] rtl:rounded-none";
 
             if (tabName === 'pilgrim') {
                 btnPilgrim.className = activeClass;
